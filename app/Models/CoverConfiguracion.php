@@ -18,7 +18,12 @@ class CoverConfiguracion extends Model
 
     public static function precioActual(): float
     {
-        return (float) (static::query()->value('precio') ?? 400.00);
+        return (float) (static::query()->value('precio') ?? 0);
+    }
+
+    public static function precioConfigurado(): bool
+    {
+        return static::precioActual() > 0;
     }
 
     public static function actualizarPrecio(float $precio): self

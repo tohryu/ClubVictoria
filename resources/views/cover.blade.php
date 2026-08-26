@@ -24,6 +24,12 @@
       <p class="text-zinc-500 text-xs mt-2">Precio por persona: <span class="text-amber-400 font-bold">${{ number_format($precioCover, 2) }}</span> MXN</p>
     </div>
 
+    @if ($precioCover <= 0)
+      <div class="bg-amber-500/10 border border-amber-500/40 text-amber-300 text-sm rounded-xl p-4 text-center">
+        La venta de cover todavía no está disponible. El administrador aún no ha configurado el precio.
+      </div>
+    @endif
+
     @if ($errors->any())
       <div class="bg-red-950/60 border border-red-500/50 text-red-300 text-sm rounded-xl p-4">
         <ul class="list-disc list-inside space-y-1">
@@ -34,7 +40,7 @@
       </div>
     @endif
 
-    <form id="form-cover" action="{{ route('cover.procesar') }}" method="POST" class="space-y-6">
+    <form id="form-cover" action="{{ route('cover.procesar') }}" method="POST" class="space-y-6 {{ $precioCover <= 0 ? 'opacity-40 pointer-events-none' : '' }}">
       @csrf
 
       <div class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl p-6 space-y-6">

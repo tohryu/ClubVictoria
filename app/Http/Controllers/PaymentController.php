@@ -35,7 +35,13 @@ class PaymentController extends Controller
             'cantidad' => 'required|integer|min:1|max:20',
         ]);
 
-        return round(CoverConfiguracion::precioActual() * $validado['cantidad'], 2);
+        $precio = CoverConfiguracion::precioActual();
+
+        if ($precio <= 0) {
+            abort(422, 'El precio del cover todavía no ha sido configurado por el administrador.');
+        }
+
+        return round($precio * $validado['cantidad'], 2);
     }
 
     public function crearIntentoStripe(Request $request): JsonResponse

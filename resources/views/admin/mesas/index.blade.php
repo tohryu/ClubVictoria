@@ -28,7 +28,7 @@
 
     <canvas id="starfield"></canvas>
 
-    <div id="toast-notificacion" class="fixed top-6 right-6 z-50 max-w-sm w-full translate-x-[120%] opacity-0 transition-all duration-300 ease-out">
+    <div id="toast-notificacion" class="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 z-50 max-w-sm sm:w-full mx-auto sm:mx-0 translate-x-[120%] opacity-0 transition-all duration-300 ease-out">
         <div id="toast-contenido" class="p-4 rounded-xl shadow-2xl border backdrop-blur-md flex items-start gap-3 bg-emerald-950/90 border-emerald-500 text-emerald-300">
             <span id="toast-icono" class="text-lg leading-none">✓</span>
             <p id="toast-mensaje" class="text-sm font-medium leading-snug"></p>

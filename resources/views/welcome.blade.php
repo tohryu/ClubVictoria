@@ -14,13 +14,13 @@
   <div class="relative z-10">
 
     <nav class="sticky top-0 z-50 backdrop-blur-md bg-black/80 border-b border-zinc-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 min-h-20 flex flex-wrap items-center justify-between gap-y-3 gap-x-4">
 
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-full border border-amber-500/40 bg-zinc-900 p-1 flex items-center justify-center overflow-hidden shrink-0 shadow-lg shadow-amber-500/10">
             <img src="{{ asset('images/logo.png') }}" alt="Logo Victoria Luxury Club" class="w-full h-full object-contain rounded-full">
           </div>
-          <span class="text-xl sm:text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600 uppercase">
+          <span class="text-lg sm:text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600 uppercase">
             Victoria <span class="font-light text-white">Luxury Club</span>
           </span>
         </div>
@@ -37,28 +37,28 @@
           @endauth
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
           @auth
 
             @if(auth()->user()->es_admin)
-              <a href="{{ route('admin.promociones.index') }}" class="hidden sm:inline-block bg-amber-500/10 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-black font-bold text-xs px-3.5 py-2 rounded-full transition-all">
+              <a href="{{ route('admin.promociones.index') }}" class="inline-flex items-center whitespace-nowrap bg-amber-500/10 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-black font-bold text-[11px] sm:text-xs px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all">
                  Panel Admin
               </a>
-              <a href="{{ route('admin.mesas.index') }}" class="hidden sm:inline-block bg-amber-500/10 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-black font-bold text-xs px-3.5 py-2 rounded-full transition-all">
+              <a href="{{ route('admin.mesas.index') }}" class="inline-flex items-center whitespace-nowrap bg-amber-500/10 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-black font-bold text-[11px] sm:text-xs px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all">
                  Modificar Precios
               </a>
-              <a href="{{ route('admin.escaner.index') }}" class="hidden sm:inline-block bg-amber-500/10 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-black font-bold text-xs px-3.5 py-2 rounded-full transition-all">
+              <a href="{{ route('admin.escaner.index') }}" class="inline-flex items-center whitespace-nowrap bg-amber-500/10 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-black font-bold text-[11px] sm:text-xs px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all">
                  Escanear QR
               </a>
             @endif
 
-            <a href="{{ route('reservas.mis_reservas') }}" class="inline-block bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-lg shadow-amber-500/20 transition-all transform hover:scale-105">
+            <a href="{{ route('reservas.mis_reservas') }}" class="inline-block bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-black font-bold text-xs sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-lg shadow-amber-500/20 transition-all transform hover:scale-105 whitespace-nowrap">
               Mis Reservas
             </a>
           @else
 
-            <a href="{{ route('login.google') }}" class="inline-flex items-center gap-2 bg-zinc-900 border border-amber-500/30 hover:border-amber-400 text-amber-400 font-bold text-sm px-4 py-2 rounded-full transition-all">
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <a href="{{ route('login.google') }}" class="inline-flex items-center gap-2 bg-zinc-900 border border-amber-500/30 hover:border-amber-400 text-amber-400 font-bold text-xs sm:text-sm px-4 py-2 rounded-full transition-all whitespace-nowrap">
+              <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
                 <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.545,6.477,2.545,12s4.476,10,10,10c5.772,0,9.654-4.058,9.654-9.825c0-0.718-0.076-1.39-0.203-2.031H12.545z"/>
               </svg>
               Iniciar Sesión con Google
