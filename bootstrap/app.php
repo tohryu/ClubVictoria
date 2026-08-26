@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // PERMITIR PROXIES PARA MANTENER SESIÓN HTTPS EN RENDER
+        $middleware->trustProxies(at: '*');
+
         $middleware->web(append: [
             SetTeamUrlDefaults::class,
         ]);

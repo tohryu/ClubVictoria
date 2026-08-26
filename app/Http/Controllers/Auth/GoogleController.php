@@ -9,33 +9,35 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
-    // Redirige al cliente a la pantalla de inicio de sesión de Google
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    // Procesa el retorno de Google tras iniciar sesión
     public function handleGoogleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            // Busca al usuario por su correo o lo crea si es nuevo
             $user = User::firstOrCreate(
                 ['email' => $googleUser->getEmail()],
                 [
                     'name' => $googleUser->getName(),
-                    'password' => bcrypt(str()->random(16)), // Contraseña aleatoria segura
-                    'es_admin' => false, // Por defecto no es admin
+                    'password' => bcrypt(str()->random(16)),
+                    'es_admin' => false,
                 ]
             );
 
-            Auth::login($user);
+            // El segundo parámetro (true) mantiene la cookie 'remember' activa
+            Auth::login($user, true);
+
+            // Regenera la sesión para garantizar persistencia y seguridad
+            request()->session()->regenerate();
 
             return redirect()->route('home');
         } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'Ocurrió un error al iniciar sesión con Google.');
+            // Cambiado a 'home' para evitar que falle buscando una ruta 'login' inexistente
+            return redirect()->route('home')->with('error', 'Ocurrió un error al iniciar sesión con Google.');
         }
     }
 }
