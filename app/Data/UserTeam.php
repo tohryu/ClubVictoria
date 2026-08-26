@@ -13,6 +13,6 @@ readonly class UserTeam
         public ?string $roleLabel,
         public ?bool $isCurrent = null,
     ) {
-        //
+
     }
 }

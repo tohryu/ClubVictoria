@@ -28,15 +28,13 @@ class GoogleController extends Controller
                 ]
             );
 
-            // El segundo parámetro (true) mantiene la cookie 'remember' activa
             Auth::login($user, true);
 
-            // Regenera la sesión para garantizar persistencia y seguridad
             request()->session()->regenerate();
 
             return redirect()->route('home');
         } catch (\Exception $e) {
-            // Cambiado a 'home' para evitar que falle buscando una ruta 'login' inexistente
+
             return redirect()->route('home')->with('error', 'Ocurrió un error al iniciar sesión con Google.');
         }
     }

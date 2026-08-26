@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Promociones y Eventos</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-black text-zinc-100 p-4 sm:p-6 md:p-10 font-sans antialiased">
     <div class="max-w-5xl mx-auto space-y-16">
 
-        <!-- ALERTA DE ÉXITO -->
         @if(session('success'))
             <div class="bg-green-500/10 border border-green-500/30 text-green-400 px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2 shadow-sm">
                 <span>✓</span>
@@ -17,16 +17,12 @@
             </div>
         @endif
 
-        <!-- ========================================== -->
-        <!-- SECCIÓN 1: PROMOCIONES                     -->
-        <!-- ========================================== -->
         <section class="space-y-6">
             <div class="border-b border-zinc-800 pb-3">
                 <h1 class="text-2xl sm:text-3xl font-black text-amber-500 tracking-tight">Administrar Promociones</h1>
                 <p class="text-xs text-zinc-400 mt-1">Gestiona las ofertas especiales y promociones vigentes.</p>
             </div>
 
-            <!-- Formulario Promociones -->
             <form action="{{ route('admin.promociones.store') }}" method="POST" class="bg-zinc-900/90 p-5 rounded-xl border border-zinc-800/80 space-y-4 backdrop-blur-sm shadow-xl">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -54,7 +50,6 @@
                 </div>
             </form>
 
-            <!-- Lista Promociones -->
             <div class="pt-2 space-y-3">
                 <h2 class="text-xs uppercase tracking-widest font-bold text-zinc-400 mb-3">Promociones Existentes</h2>
                 <div class="space-y-2.5">
@@ -90,7 +85,6 @@
             </div>
         </section>
 
-        <!-- DIVISOR CON MAYOR ESPACIADO VISUAL -->
         <div class="relative py-2">
             <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-t border-zinc-800/80"></div>
@@ -100,16 +94,12 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- SECCIÓN 2: EVENTOS                         -->
-        <!-- ========================================== -->
         <section class="space-y-6">
             <div class="border-b border-zinc-800 pb-3">
                 <h2 class="text-2xl sm:text-3xl font-black text-amber-500 tracking-tight">Administrar Próximos Eventos</h2>
                 <p class="text-xs text-zinc-400 mt-1">Programa carteleras, fechas especiales y eventos.</p>
             </div>
 
-            <!-- Formulario Eventos -->
             <form action="{{ route('admin.promociones.eventos.store') }}" method="POST" enctype="multipart/form-data" class="bg-zinc-900/90 p-5 rounded-xl border border-zinc-800/80 space-y-4 backdrop-blur-sm shadow-xl">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -151,7 +141,6 @@
                 </div>
             </form>
 
-            <!-- Lista Eventos -->
             <div class="pt-2 space-y-3">
                 <h2 class="text-xs uppercase tracking-widest font-bold text-zinc-400 mb-3">Eventos Programados</h2>
                 <div class="space-y-2.5">
@@ -164,7 +153,7 @@
                                 <div class="min-w-0 space-y-0.5">
                                     <span class="inline-block text-[10px] uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">{{ $evento->fecha }}</span>
                                     <h3 class="text-base font-bold text-white leading-tight truncate">
-                                        {{ $evento->titulo }} 
+                                        {{ $evento->titulo }}
                                         @if($evento->subtitulo)
                                             <span class="text-xs font-normal text-zinc-400">({{ $evento->subtitulo }})</span>
                                         @endif

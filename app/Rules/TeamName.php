@@ -10,11 +10,7 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 
 class TeamName implements ValidationRule
 {
-    /**
-     * Run the validation rule.
-     *
-     * @param  Closure(string, ?string=): PotentiallyTranslatedString  $fail
-     */
+
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $name = strtolower(trim($value));
@@ -24,11 +20,6 @@ class TeamName implements ValidationRule
         }
     }
 
-    /**
-     * Get a list of all reserved names.
-     *
-     * @return array<int, string>
-     */
     protected function reservedNames(): array
     {
         return once(fn () => collect($this->routesPrefixes())
@@ -368,11 +359,6 @@ class TeamName implements ValidationRule
             ->toArray());
     }
 
-    /**
-     * Get a list of reserved names from the application's route prefixes.
-     *
-     * @return array<int, string>
-     */
     protected function routesPrefixes(): array
     {
         return collect(Route::getRoutes()->getRoutes())

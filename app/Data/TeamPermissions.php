@@ -13,6 +13,6 @@ readonly class TeamPermissions
         public bool $canCreateInvitation,
         public bool $canCancelInvitation,
     ) {
-        //
+
     }
 }

@@ -10,9 +10,7 @@ use Illuminate\Support\Str;
 
 class PromocionController extends Controller
 {
-    // ==========================================
-    // VISTA PÚBLICA (Página Principal)
-    // ==========================================
+
     public function publicIndex()
     {
         $promociones = Promocion::where('activo', true)->get();
@@ -21,9 +19,6 @@ class PromocionController extends Controller
         return view('welcome', compact('promociones', 'eventos'));
     }
 
-    // ==========================================
-    // PANEL DE ADMINISTRACIÓN
-    // ==========================================
     public function index()
     {
         $promociones = Promocion::latest()->get();
@@ -32,7 +27,6 @@ class PromocionController extends Controller
         return view('admin.promociones', compact('promociones', 'eventos'));
     }
 
-    // Guarda una nueva promoción
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -49,7 +43,6 @@ class PromocionController extends Controller
         return redirect()->route('admin.promociones.index')->with('success', 'Promoción creada correctamente.');
     }
 
-    // Guarda un nuevo evento procesando el archivo subido
     public function storeEvento(Request $request)
     {
         $validated = $request->validate([
@@ -58,10 +51,9 @@ class PromocionController extends Controller
             'fecha'           => 'required|date',
             'descripcion'     => 'nullable|string',
             'precio_etiqueta' => 'required|string|max:100',
-            'imagen'          => 'required|image|mimes:jpeg,png,jpg,webp|max:4096', // Valida archivo de imagen (máx 4MB)
+            'imagen'          => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
         ]);
 
-        // Sube la imagen a storage/app/public/eventos y obtiene el path relativo
         if ($request->hasFile('imagen')) {
             $validated['imagen'] = $request->file('imagen')->store('eventos', 'public');
         }
@@ -73,7 +65,6 @@ class PromocionController extends Controller
         return redirect()->route('admin.promociones.index')->with('success', 'Evento guardado correctamente.');
     }
 
-    // Activa o desactiva la promoción
     public function toggleStatus($id)
     {
         $promo = Promocion::findOrFail($id);
@@ -83,7 +74,6 @@ class PromocionController extends Controller
         return redirect()->route('admin.promociones.index')->with('success', 'Estado de la promoción actualizado.');
     }
 
-    // Activa o desactiva un evento
     public function toggleStatusEvento($id)
     {
         $evento = Evento::findOrFail($id);
@@ -93,18 +83,16 @@ class PromocionController extends Controller
         return redirect()->route('admin.promociones.index')->with('success', 'Estado del evento actualizado.');
     }
 
-    // Elimina la promoción
     public function destroy($id)
     {
         Promocion::destroy($id);
         return redirect()->route('admin.promociones.index')->with('success', 'Promoción eliminada.');
     }
 
-    // Elimina el evento y borra su archivo de imagen físico de storage
     public function destroyEvento($id)
     {
         $evento = Evento::findOrFail($id);
-        
+
         if ($evento->imagen && Storage::disk('public')->exists($evento->imagen)) {
             Storage::disk('public')->delete($evento->imagen);
         }

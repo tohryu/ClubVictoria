@@ -8,16 +8,9 @@ use App\Models\TeamInvitation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<TeamInvitation>
- */
 class TeamInvitationFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+
     public function definition(): array
     {
         return [
@@ -30,9 +23,6 @@ class TeamInvitationFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the invitation has been accepted.
-     */
     public function accepted(): static
     {
         return $this->state(fn (array $attributes) => [
@@ -40,9 +30,6 @@ class TeamInvitationFactory extends Factory
         ]);
     }
 
-    /**
-     * Indicate that the invitation has expired.
-     */
     public function expired(): static
     {
         return $this->state(fn (array $attributes) => [
@@ -50,9 +37,6 @@ class TeamInvitationFactory extends Factory
         ]);
     }
 
-    /**
-     * Indicate that the invitation expires in the given time.
-     */
     public function expiresIn(int $value, string $unit = 'days'): static
     {
         return $this->state(fn (array $attributes) => [

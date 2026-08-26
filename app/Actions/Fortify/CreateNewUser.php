@@ -16,14 +16,9 @@ class CreateNewUser implements CreatesNewUsers
 
     public function __construct(private CreateTeam $createTeam)
     {
-        //
+
     }
 
-    /**
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
-     */
     public function create(array $input): User
     {
         Validator::make($input, [

@@ -9,9 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Modificar Precios - Control de Mesas Espacial</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Fondo canvas para las estrellas */
+
         #starfield {
             position: fixed;
             top: 0;
@@ -25,10 +26,8 @@
 </head>
 <body class="text-gray-100 min-h-screen p-6 relative">
 
-    <!-- CANVAS PARA EL FONDO DE ESTRELLAS ANIMADAS -->
     <canvas id="starfield"></canvas>
 
-    <!-- NOTIFICACIÓN (TOAST) PROPIA DE LA PÁGINA -->
     <div id="toast-notificacion" class="fixed top-6 right-6 z-50 max-w-sm w-full translate-x-[120%] opacity-0 transition-all duration-300 ease-out">
         <div id="toast-contenido" class="p-4 rounded-xl shadow-2xl border backdrop-blur-md flex items-start gap-3 bg-emerald-950/90 border-emerald-500 text-emerald-300">
             <span id="toast-icono" class="text-lg leading-none">✓</span>
@@ -37,26 +36,31 @@
     </div>
 
     <div class="max-w-7xl mx-auto relative z-10">
-        <!-- Encabezado de la Página -->
+
         <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-800 pb-4">
             <div>
                 <h1 class="text-3xl font-extrabold text-white tracking-wide drop-shadow-md">Panel de Control de Tarifas</h1>
                 <p class="text-gray-400 text-sm mt-1">Selecciona una mesa para cambiar su precio en el sistema.</p>
             </div>
 
-            <!-- BOTONES DE NAVEGACIÓN ENTRE PLANTAS -->
             <div class="flex gap-2 mt-4 md:mt-0 bg-gray-900/80 p-1.5 rounded-xl border border-gray-700/60 backdrop-blur-md">
-                <button type="button" 
-                        id="btn-planta-baja" 
-                        onclick="cambiarPlanta('baja')" 
+                <button type="button"
+                        id="btn-planta-baja"
+                        onclick="cambiarPlanta('baja')"
                         class="px-5 py-2 rounded-lg font-bold text-sm transition shadow-lg bg-blue-600 text-white cursor-pointer">
                     Planta Baja
                 </button>
-                <button type="button" 
-                        id="btn-segunda-planta" 
-                        onclick="cambiarPlanta('alta')" 
+                <button type="button"
+                        id="btn-segunda-planta"
+                        onclick="cambiarPlanta('alta')"
                         class="px-5 py-2 rounded-lg font-bold text-sm transition text-gray-400 hover:text-white hover:bg-gray-800/60 cursor-pointer">
                     Segunda Planta
+                </button>
+                <button type="button"
+                        id="btn-cover"
+                        onclick="cambiarPlanta('cover')"
+                        class="px-5 py-2 rounded-lg font-bold text-sm transition text-gray-400 hover:text-white hover:bg-gray-800/60 cursor-pointer">
+                    Cover
                 </button>
             </div>
         </div>
@@ -69,26 +73,24 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            <!-- PANEL IZQUIERDO: CONTENEDOR DE PLANTAS -->
             <div class="lg:col-span-2 bg-gray-900/70 p-6 rounded-2xl shadow-2xl border border-gray-800 backdrop-blur-md">
-                
-                <!-- ================= VISTA PLANTA BAJA ================= -->
+
                 <div id="vista-planta-baja" class="space-y-8">
-                    <!-- SECCIÓN L (L1 - L16) -->
+
                     <div>
                         <h2 class="text-lg font-bold text-blue-400 mb-3 pb-1 border-b border-gray-800 flex items-center gap-2">
                             <span>Zona L (L1 - L16)</span>
                         </h2>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-950/60 p-4 rounded-xl border border-gray-800/80">
                             @foreach(range(1, 16) as $i)
-                                @php 
-                                    $codigo = 'L' . $i; 
+                                @php
+                                    $codigo = 'L' . $i;
                                     $mesa = $mesas->firstWhere('numero', $codigo);
                                     $precio = $mesa ? $mesa->precio : 0.00;
                                     $id = $mesa ? $mesa->id : '';
                                 @endphp
-                                <button type="button" 
-                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})" 
+                                <button type="button"
+                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})"
                                         class="p-3 border border-gray-800 bg-gray-900/80 hover:bg-blue-950/50 hover:border-blue-500/80 rounded-xl font-bold text-center transition shadow-md group focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
                                     <span class="block text-gray-200 group-hover:text-blue-400 text-base">{{ $codigo }}</span>
                                     <span id="precio-{{ $codigo }}" class="block text-xs text-gray-400 font-normal mt-1">${{ number_format($precio, 2) }}</span>
@@ -97,21 +99,20 @@
                         </div>
                     </div>
 
-                    <!-- SECCIÓN R (R1 - R13) -->
                     <div>
                         <h2 class="text-lg font-bold text-blue-400 mb-3 pb-1 border-b border-gray-800 flex items-center gap-2">
                             <span>Zona R (R1 - R13)</span>
                         </h2>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-950/60 p-4 rounded-xl border border-gray-800/80">
                             @foreach(range(1, 13) as $i)
-                                @php 
-                                    $codigo = 'R' . $i; 
+                                @php
+                                    $codigo = 'R' . $i;
                                     $mesa = $mesas->firstWhere('numero', $codigo);
                                     $precio = $mesa ? $mesa->precio : 0.00;
                                     $id = $mesa ? $mesa->id : '';
                                 @endphp
-                                <button type="button" 
-                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})" 
+                                <button type="button"
+                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})"
                                         class="p-3 border border-gray-800 bg-gray-900/80 hover:bg-blue-950/50 hover:border-blue-500/80 rounded-xl font-bold text-center transition shadow-md group focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
                                     <span class="block text-gray-200 group-hover:text-blue-400 text-base">{{ $codigo }}</span>
                                     <span id="precio-{{ $codigo }}" class="block text-xs text-gray-400 font-normal mt-1">${{ number_format($precio, 2) }}</span>
@@ -120,20 +121,19 @@
                         </div>
                     </div>
 
-                    <!-- SECCIÓN D (D1 - D2) -->
                     <div>
                         <h2 class="text-lg font-bold text-blue-400 mb-3 pb-1 border-b border-gray-800 flex items-center gap-2">
                             <span>Zona D (D1 - D2)</span>
                         </h2>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-950/60 p-4 rounded-xl border border-gray-800/80">
                             @foreach(['D1', 'D2'] as $codigo)
-                                @php 
+                                @php
                                     $mesa = $mesas->firstWhere('numero', $codigo);
                                     $precio = $mesa ? $mesa->precio : 0.00;
                                     $id = $mesa ? $mesa->id : '';
                                 @endphp
-                                <button type="button" 
-                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})" 
+                                <button type="button"
+                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})"
                                         class="p-3 border border-gray-800 bg-gray-900/80 hover:bg-blue-950/50 hover:border-blue-500/80 rounded-xl font-bold text-center transition shadow-md group focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
                                     <span class="block text-gray-200 group-hover:text-blue-400 text-base">{{ $codigo }}</span>
                                     <span id="precio-{{ $codigo }}" class="block text-xs text-gray-400 font-normal mt-1">${{ number_format($precio, 2) }}</span>
@@ -143,23 +143,22 @@
                     </div>
                 </div>
 
-                <!-- ================= VISTA SEGUNDA PLANTA ================= -->
                 <div id="vista-segunda-planta" class="space-y-8 hidden">
-                    <!-- SECCIÓN F (F1 - F16) -->
+
                     <div>
                         <h2 class="text-lg font-bold text-purple-400 mb-3 pb-1 border-b border-gray-800 flex items-center gap-2">
                             <span>Zona F (F1 - F16)</span>
                         </h2>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-950/60 p-4 rounded-xl border border-gray-800/80">
                             @foreach(range(1, 16) as $i)
-                                @php 
-                                    $codigo = 'F' . $i; 
+                                @php
+                                    $codigo = 'F' . $i;
                                     $mesa = $mesas->firstWhere('numero', $codigo);
                                     $precio = $mesa ? $mesa->precio : 0.00;
                                     $id = $mesa ? $mesa->id : '';
                                 @endphp
-                                <button type="button" 
-                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})" 
+                                <button type="button"
+                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})"
                                         class="p-3 border border-gray-800 bg-gray-900/80 hover:bg-purple-950/50 hover:border-purple-500/80 rounded-xl font-bold text-center transition shadow-md group focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer">
                                     <span class="block text-gray-200 group-hover:text-purple-400 text-base">{{ $codigo }}</span>
                                     <span id="precio-{{ $codigo }}" class="block text-xs text-gray-400 font-normal mt-1">${{ number_format($precio, 2) }}</span>
@@ -168,21 +167,20 @@
                         </div>
                     </div>
 
-                    <!-- SECCIÓN A (A1 - A4) -->
                     <div>
                         <h2 class="text-lg font-bold text-purple-400 mb-3 pb-1 border-b border-gray-800 flex items-center gap-2">
                             <span>Zona A (A1 - A4)</span>
                         </h2>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-950/60 p-4 rounded-xl border border-gray-800/80">
                             @foreach(range(1, 4) as $i)
-                                @php 
-                                    $codigo = 'A' . $i; 
+                                @php
+                                    $codigo = 'A' . $i;
                                     $mesa = $mesas->firstWhere('numero', $codigo);
                                     $precio = $mesa ? $mesa->precio : 0.00;
                                     $id = $mesa ? $mesa->id : '';
                                 @endphp
-                                <button type="button" 
-                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})" 
+                                <button type="button"
+                                        onclick="seleccionarMesaParaEditar('{{ $id }}', '{{ $codigo }}', {{ $precio }})"
                                         class="p-3 border border-gray-800 bg-gray-900/80 hover:bg-purple-950/50 hover:border-purple-500/80 rounded-xl font-bold text-center transition shadow-md group focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer">
                                     <span class="block text-gray-200 group-hover:text-purple-400 text-base">{{ $codigo }}</span>
                                     <span id="precio-{{ $codigo }}" class="block text-xs text-gray-400 font-normal mt-1">${{ number_format($precio, 2) }}</span>
@@ -192,22 +190,55 @@
                     </div>
                 </div>
 
+                <div id="vista-cover" class="space-y-8 hidden">
+                    <div>
+                        <h2 class="text-lg font-bold text-amber-400 mb-3 pb-1 border-b border-gray-800 flex items-center gap-2">
+                            <span>Precio del Boleto de Cover</span>
+                        </h2>
+                        <div class="bg-gray-950/60 p-6 rounded-xl border border-gray-800/80 max-w-sm">
+                            <p class="text-xs text-gray-400 mb-4">Este es el precio por persona que se cobra al comprar un boleto digital de cover.</p>
+                            <div class="text-center mb-4">
+                                <span class="text-4xl font-black text-amber-400">${{ number_format((float) \App\Models\CoverConfiguracion::precioActual(), 2) }}</span>
+                                <span id="precio-cover-actual" class="hidden">{{ (float) \App\Models\CoverConfiguracion::precioActual() }}</span>
+                            </div>
+                            <form id="form-modificar-precio-cover">
+                                @csrf
+                                @method('PATCH')
+                                <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Nuevo Precio de Cover ($)</label>
+                                <div class="relative rounded-lg shadow-sm mb-3">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">$</span>
+                                    </div>
+                                    <input type="number"
+                                           step="0.01"
+                                           min="0"
+                                           id="precio-cover-input"
+                                           name="precio"
+                                           value="{{ (float) \App\Models\CoverConfiguracion::precioActual() }}"
+                                           class="w-full pl-7 bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-white font-semibold focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+                                           required>
+                                </div>
+                                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-black font-bold py-2.5 px-4 rounded-lg transition shadow-lg text-sm cursor-pointer">
+                                    Guardar Precio de Cover
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- PANEL DERECHO: FORMULARIO DE MODIFICACIÓN DE PRECIO -->
             <div class="bg-gray-900/70 p-6 rounded-2xl shadow-2xl border border-gray-800 backdrop-blur-md h-fit sticky top-6">
                 <h2 class="text-xl font-bold mb-4 text-white border-b border-gray-800 pb-2">Modificar Precio</h2>
-                
+
                 <form id="form-modificar-precio" action="" method="POST">
                     @csrf
                     @method('PATCH')
 
-                    <!-- Mensaje inicial -->
                     <div id="mensaje-seleccion" class="p-6 border border-dashed border-gray-800 rounded-xl text-center text-gray-400 text-sm bg-gray-950/30">
                         Haz clic en cualquier mesa de la planta actual para editar su tarifa.
                     </div>
 
-                    <!-- Campos de Edición -->
                     <div id="campos-edicion" class="space-y-4 hidden">
                         <div>
                             <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Mesa Seleccionada</label>
@@ -220,24 +251,24 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500">$</span>
                                 </div>
-                                <input type="number" 
-                                       step="0.01" 
-                                       min="0" 
-                                       id="precio" 
-                                       name="precio" 
-                                       class="w-full pl-7 bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-white font-semibold focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" 
-                                       placeholder="0.00" 
+                                <input type="number"
+                                       step="0.01"
+                                       min="0"
+                                       id="precio"
+                                       name="precio"
+                                       class="w-full pl-7 bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-white font-semibold focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                       placeholder="0.00"
                                        required>
                             </div>
                         </div>
 
                         <div class="pt-2 flex gap-2">
-                            <button type="button" 
-                                    onclick="cancelarEdicion()" 
+                            <button type="button"
+                                    onclick="cancelarEdicion()"
                                     class="w-1/3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold py-2.5 px-4 rounded-lg transition text-sm cursor-pointer">
                                 Cancelar
                             </button>
-                            <button type="submit" 
+                            <button type="submit"
                                     class="w-2/3 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-4 rounded-lg transition shadow-lg text-sm cursor-pointer">
                                 Guardar Precio
                             </button>
@@ -249,32 +280,39 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROL Y ANIMACIÓN ESPACIAL -->
     <script>
-        // --- CONTROL DE NAVEGACIÓN ENTRE PLANTAS ---
+
         function cambiarPlanta(planta) {
             const vistaBaja = document.getElementById('vista-planta-baja');
             const vistaAlta = document.getElementById('vista-segunda-planta');
+            const vistaCover = document.getElementById('vista-cover');
             const btnBaja = document.getElementById('btn-planta-baja');
             const btnAlta = document.getElementById('btn-segunda-planta');
+            const btnCover = document.getElementById('btn-cover');
+
+            const inactivo = "px-5 py-2 rounded-lg font-bold text-sm transition text-gray-400 hover:text-white hover:bg-gray-800/60 cursor-pointer";
+
+            vistaBaja.classList.add('hidden');
+            vistaAlta.classList.add('hidden');
+            vistaCover.classList.add('hidden');
+            btnBaja.className = inactivo;
+            btnAlta.className = inactivo;
+            btnCover.className = inactivo;
 
             if (planta === 'baja') {
                 vistaBaja.classList.remove('hidden');
-                vistaAlta.classList.add('hidden');
-
                 btnBaja.className = "px-5 py-2 rounded-lg font-bold text-sm transition shadow-lg bg-blue-600 text-white cursor-pointer";
-                btnAlta.className = "px-5 py-2 rounded-lg font-bold text-sm transition text-gray-400 hover:text-white hover:bg-gray-800/60 cursor-pointer";
+            } else if (planta === 'cover') {
+                vistaCover.classList.remove('hidden');
+                btnCover.className = "px-5 py-2 rounded-lg font-bold text-sm transition shadow-lg bg-amber-600 text-black cursor-pointer";
             } else {
-                vistaBaja.classList.add('hidden');
                 vistaAlta.classList.remove('hidden');
-
                 btnAlta.className = "px-5 py-2 rounded-lg font-bold text-sm transition shadow-lg bg-purple-600 text-white cursor-pointer";
                 btnBaja.className = "px-5 py-2 rounded-lg font-bold text-sm transition text-gray-400 hover:text-white hover:bg-gray-800/60 cursor-pointer";
             }
             cancelarEdicion();
         }
 
-        // --- CONTROL DE FORMULARIO DE EDICIÓN ---
         let mesaSeleccionadaId = null;
         let mesaSeleccionadaCodigo = null;
 
@@ -315,7 +353,6 @@
             document.getElementById('mensaje-seleccion').classList.remove('hidden');
         }
 
-        // --- NOTIFICACIÓN (TOAST) PROPIA DE LA PÁGINA, SIN ALERT DEL NAVEGADOR ---
         let toastTimeout = null;
         function mostrarToast(mensaje, tipo = 'success') {
             const toast = document.getElementById('toast-notificacion');
@@ -341,7 +378,6 @@
             }, 4000);
         }
 
-        // --- ENVÍO DEL FORMULARIO POR AJAX (SIN RECARGAR LA PÁGINA) ---
         document.getElementById('form-modificar-precio').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -359,7 +395,7 @@
             submitBtn.textContent = 'Guardando...';
 
             fetch(`/admin/mesas/${mesaSeleccionadaId}/precio`, {
-                method: 'PATCH', // coincide con Route::patch('/{id}/precio', ...)
+                method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -383,7 +419,7 @@
                 return data;
             })
             .then((data) => {
-                // Actualiza el precio mostrado en el botón de la mesa, en vivo.
+
                 const spanPrecio = document.getElementById('precio-' + data.mesa.numero);
                 if (spanPrecio) {
                     spanPrecio.textContent = '$' + Number(data.mesa.precio).toFixed(2);
@@ -401,7 +437,53 @@
             });
         });
 
-        // --- ANIMACIÓN DEL FONDO ESPACIAL (ESTRELLAS EN MOVIMIENTO) ---
+        document.getElementById('form-modificar-precio-cover').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const precioInput = document.getElementById('precio-cover-input');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const textoOriginalBtn = submitBtn.textContent;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Guardando...';
+
+            fetch('{{ route('admin.mesas.cover.update_precio') }}', {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                    precio: precioInput.value,
+                }),
+            })
+            .then(async (response) => {
+                const data = await response.json().catch(() => null);
+
+                if (!response.ok || !data || !data.success) {
+                    const mensajeError = (data && data.message)
+                        ? data.message
+                        : 'No se pudo guardar el precio del cover. Verifica el valor e intenta de nuevo.';
+                    throw new Error(mensajeError);
+                }
+
+                return data;
+            })
+            .then((data) => {
+                mostrarToast(data.message, 'success');
+            })
+            .catch((error) => {
+                mostrarToast(error.message, 'error');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = textoOriginalBtn;
+            });
+        });
+
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
 

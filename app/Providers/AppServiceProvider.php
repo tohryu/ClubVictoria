@@ -11,17 +11,12 @@ use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
-        //
+
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         if (app()->isProduction() || request()->header('X-Forwarded-Proto') === 'https') {
@@ -31,9 +26,6 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDefaults();
     }
 
-    /**
-     * Configure default behaviors for production-ready applications.
-     */
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);

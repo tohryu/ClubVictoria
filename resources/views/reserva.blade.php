@@ -25,7 +25,6 @@
     </button>
   </div>
 
-
   <div id="modalReserva" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 hidden">
     <div onclick="closeModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"></div>
     <div class="relative w-full max-w-5xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col z-10">
@@ -43,12 +42,12 @@
       </div>
 
       <div class="p-6 overflow-y-auto space-y-8">
-        
+
         <form action="{{ route('mesas.procesar') }}" method="POST" class="space-y-8">
           @csrf
 
           <div class="bg-zinc-950/60 border border-zinc-800/80 rounded-xl p-6">
-            
+
             <div class="flex flex-wrap items-center justify-center gap-6 mb-6 text-xs text-zinc-400 border-b border-zinc-800 pb-4">
               <div class="flex items-center gap-2">
                 <span class="w-4 h-4 rounded bg-amber-500/20 border border-amber-500"></span>
@@ -65,10 +64,9 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-              
-              <!-- PLANTA BAJA -->
+
               <div class="lg:col-span-3 bg-zinc-900/50 border border-zinc-800/80 rounded-xl p-6 overflow-x-auto min-w-[300px]">
-                
+
                 <div class="w-32 h-10 mx-auto bg-zinc-800 border border-blue-500/50 rounded flex items-center justify-center text-xs font-bold text-blue-400 tracking-wider mb-6">
                   BARRA
                 </div>
@@ -78,8 +76,7 @@
                 </div>
 
                 <div class="grid grid-cols-3 gap-4 items-center max-w-xl mx-auto">
-                  
-                  <!-- MESAS IZQUIERDA -->
+
                   <div class="space-y-3 flex flex-col items-end">
                     <button type="button" onclick="selectMesa('Mesa L1', '$13,000', 'VIP Lateral Izq')" class="mesa-btn w-20 h-10 rounded border border-amber-500/40 bg-zinc-950 hover:border-amber-400 text-xs font-bold transition-all flex flex-col items-center justify-center">
                       <span>L1</span>
@@ -95,14 +92,12 @@
                     </button>
                   </div>
 
-                  <!-- PISTA -->
                   <div class="bg-amber-500/5 border border-amber-500/20 rounded-2xl py-12 text-center flex flex-col items-center justify-center">
                     <div class="border border-amber-500/40 px-4 py-8 rounded-xl bg-black/60">
                       <span class="block text-base font-black tracking-widest text-amber-400 rotate-90 sm:rotate-0">PISTA</span>
                     </div>
                   </div>
 
-                  <!-- MESAS DERECHA -->
                   <div class="space-y-3 flex flex-col items-start">
                     <button type="button" onclick="selectMesa('Mesa R1', '$15,000', 'VIP Pista')" class="mesa-btn w-20 h-10 rounded border border-amber-500/40 bg-zinc-950 hover:border-amber-400 text-xs font-bold transition-all flex flex-col items-center justify-center">
                       <span>R1</span>
@@ -128,7 +123,6 @@
 
               </div>
 
-              <!-- SEGUNDO PISO -->
               <div class="bg-zinc-900/50 border border-zinc-800/80 rounded-xl p-4">
                 <div class="border-b border-zinc-800 pb-2 mb-4 text-center">
                   <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">SEGUNDO PISO</h3>
@@ -153,10 +147,8 @@
 
             </div>
 
-  
             <input type="hidden" name="mesa_id" id="input_mesa_id" required>
             <input type="hidden" name="zona" id="input_zona" required>
-
 
             <div id="resumen_mesa" class="mt-6 bg-amber-500/10 border border-amber-500/40 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 hidden">
               <div>
@@ -172,7 +164,6 @@
 
           </div>
 
-  
           <div class="space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div class="sm:col-span-3">
@@ -225,7 +216,6 @@
     </div>
   </div>
 
-
   <script>
     function openModal() {
       document.getElementById('modalReserva').classList.remove('hidden');
@@ -252,7 +242,7 @@
       document.getElementById('txt_mesa_nombre').innerText = nombre;
       document.getElementById('txt_mesa_zona').innerText = 'Zona: ' + zona;
       document.getElementById('txt_mesa_precio').innerText = precio;
-      
+
       document.getElementById('resumen_mesa').classList.remove('hidden');
     }
   </script>

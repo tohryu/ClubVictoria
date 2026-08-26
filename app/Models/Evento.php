@@ -15,7 +15,7 @@ class Evento extends Model
         'fecha',
         'descripcion',
         'precio_etiqueta',
-        'imagen', // <-- Debe estar aquí
+        'imagen',
         'activo',
     ];
 }
