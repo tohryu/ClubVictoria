@@ -39,6 +39,13 @@ class CoverController extends Controller
         try {
             $boleto = DB::transaction(function () use ($validated, $request) {
                 $precioUnitario = CoverConfiguracion::precioActual();
+
+                if ($precioUnitario <= 0) {
+                    throw ValidationException::withMessages([
+                        'cantidad' => 'El precio del cover todavía no ha sido configurado por el administrador.',
+                    ]);
+                }
+
                 $total = round($precioUnitario * $validated['cantidad'], 2);
 
                 if ($validated['metodo_pago'] === 'tarjeta') {
